@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+<title>Check Out</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form action="" id="form">
+                    <div id="user-info">
+                        <p><strong>Shipping Information:</strong> </p>
+                        <hr>
+                        <div class="form-field">
+                            <input type="text" name="name" id="" placeholder="Last Name.." required class="form-control">
+                        </div>
+                        <div class="form-field">
+                            <input type="text" name="email" id="" placeholder="First Name.." required class="form-control">
+                        </div>
+                    </div>
+                    <div id="shipping-info">
+                        
+                        <!-- ghi nhiều địa chỉ cho có thông tin để ghi -->
+                        <div class="form-field">
+                            <input class="form-control" type="text" name="address" placeholder="Address..">
+                        </div>
+                        <!----------------------------------------------->
+                        <div class="form-field">
+                            <input class="form-control" type="text" name="city" placeholder="Phone Number..">
+                        </div>
+                       
+                        <!----------------------------------------------->
+                    </div>
+
+                    <hr>
+                    <a id="form-button" class="btn btn-primary btn-block field-wrapper" type="submit">Continue</a>
+                </form>
+            </div>
+            <br>
+            <div class="box-element hidden" id="payment-info">
+                <!-- <small>Paypal Options</small> -->
+                <!-- <button id="make-payment">Make payment</button> -->
+                <!-- <div id="paypal-button-container"></div> -->
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="box-element">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'cart' %}" class="btn btn-outline-dark field-wrapper">&#x2190; Back to cart</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-dark field-wrapper">&#x2190; Back to cart</a>
+                {% endif %}
+                <hr>
+                <h3>Order Summary</h3>
+                <hr>
+                {% for item in items %}
+                <div class="cart-row">
+                    <div style="flex: 2;"><img class="row-image" src="{{item.product.imageURL}}" alt=""></div>
+                    <div style="flex: 2;">{{item.product.name}}</div>
+                    <div style="flex: 1;">{{item.product.selling_price | stringformat:'d'}}$</div>
+                    <div style="flex: 1;">x{{item.product_qty}}</div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h5>Items: {{get_cart_item}} </h5>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5>Total: ${{get_cart_total|floatformat:2}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

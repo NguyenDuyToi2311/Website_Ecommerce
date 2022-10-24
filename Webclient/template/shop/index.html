@@ -1,0 +1,35 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+{% include "inc/slider.html" %}
+<div class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3">Latest Offfers</h4>
+            <hr style="border-color:#b8bfc2;">
+        </div>
+        {% for item in products %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card my-3">
+                {% if item.quantity < 1 %}
+                <input type="hidden" value="{{products.id}}" id="pid">
+                <div class="hot-index">Out of Stock</div>                  
+                {% endif %}
+                <img src="{{item.product_image.url}}" class="card-image-top" alt="Categories">
+                <div class="card-body">
+                    <a href="{% url 'product_detail' item.category.name item.name %}" class="text-decoration-none">
+                        <h5 class="card-title text-primary">{{item.name}}</h5>
+                    </a>
+                    <p class="card-text">
+                        <span class="float-start old_price"><s>Rs.{{ item.original_price | stringformat:'d'}}$</s></span>
+                        
+                        <span class="float-end new_price">Rs.{{ item.selling_price | stringformat:'d' }}$</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>  
+{% endblock content %}

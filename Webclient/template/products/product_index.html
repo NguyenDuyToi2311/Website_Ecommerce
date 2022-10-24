@@ -1,0 +1,43 @@
+{% extends 'layouts/main.html' %}
+{% block title %}
+<title>{{category_name}} Collections</title>
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-4 my-5" style="min-height:600px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{category_name}} Products</h4>
+                <hr style="border-color:#b8bfc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'main' %}">Home</a></li>
+                        <!-- <li class="breadcrumb-item active">{{category_name}} Collections</li> -->
+                    </ol>
+                </nav>
+               
+            </div>
+            {% for item in products %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card my-3">
+                    <img src="{{item.product_image.url}}" class="card-image-top" alt="Categories">
+                    <div class="card-body">
+                        <a href="{% url 'product_detail' category_name item.name %}" class="text-decoration-none">
+                            <h5 class="card-title text-primary">{{item.name}}</h5>
+                        </a>
+                        <p class="card-text">
+                            <span
+                                class="float-start old_price"><s>Rs.{{ item.original_price | stringformat:'d'}}</s></span>
+                            <span class="float-end new_price">Rs.{{ item.selling_price | stringformat:'d' }}</span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
